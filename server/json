@@ -1,0 +1,9 @@
+map[
+    args:map[] 
+    data:{"embedded":{"yes":"of course!"},"hello":"world","life":42} 
+    files:map[] 
+    form:map[] 
+    headers:map[Accept-Encoding:gzip Content-Length:59 Content-Type:application/json Host:httpbin.org User-Agent:Go-http-client/2.0 X-Amzn-Trace-Id:Root=1-5ef190e0-21a271c8c850f12bc177b52d] 
+    json:map[embedded:map[yes:of course!] hello:world life:42] 
+    origin:128.107.241.168 url:https://httpbin.org/post
+]
