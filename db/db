@@ -1,0 +1,96 @@
+package db
+
+import (
+	"database/sql"
+	"fmt"
+	//_ "github.com/lib/pq"
+)
+
+//select
+//update
+//delete
+func UpdateQuery(conn *sql.DB) error {
+	update := `UPDATE public.student
+	SET name='sathi', id=1
+	WHERE true;`
+	_, err := conn.Exec(update)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func DeleteQuery(conn *sql.DB) error {
+	delete := `DELETE FROM public.student
+	WHERE true;`
+	_, err := conn.Exec(delete)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func InsertQuery(conn *sql.DB) error {
+	insert := `INSERT INTO public.student(
+		name, id)
+		VALUES ('satheesh', 123)`
+	_, err := conn.Exec(insert)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+func SelectQuery(conn *sql.DB) error {
+	statement := "select name, id FROM public.student"
+	fmt.Println("statement formatted is")
+
+	row, err := conn.Query(statement)
+	if err != nil {
+		return err
+	}
+
+	defer row.Close()
+	for row.Next() {
+		var id int
+		var name string
+
+		err := row.Scan(&name, &id)
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+		switch err {
+
+		case sql.ErrNoRows:
+			fmt.Println("no rows")
+			return err
+		case nil:
+			fmt.Println("name is", name, " age is", id)
+			//default to be written
+		}
+	}
+	//err := row.Scan(&id, &name, &age)
+
+	return nil
+
+}
+
+/*func main() {
+	pgsql := fmt.Sprintf("host=localhost port=5432 user=postgres password=satheesh dbname=postgres sslmode=disable")
+	db, err := sql.Open("postgres", pgsql)
+	if err != nil {
+		fmt.Println("error while connecting db", err)
+	}
+	defer db.Close()
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("error while pinging db", err)
+	}
+	fmt.Println("connected...")
+	_ = insertQuery(db)
+
+}*/
